@@ -102,13 +102,34 @@ Collating needs only that workbooks have been added — no allocation required. 
 on-screen preview still shows the key columns so the table stays readable; the full
 column set is in the downloads.
 
+## QC names by project
+
+The QC Allocation tab assigns reviewers per project. In **Settings**, each project has a
+name, an optional QC %, and its own QC names; the same person can be listed under several
+projects.
+
+- A row belongs to the project whose name **equals its Sub Task**. Matching ignores case
+  and extra spaces, nothing else: `Alpha` matches `alpha ` but not `Alpha - Review`.
+- Each project is sampled at its own QC %, or at the default percentage on the main screen
+  when its QC % is blank. Within a project the usual rules apply: per production user,
+  rounded up, then dealt evenly across **that project's** QC names only.
+- Eligible rows whose Sub Task matches no project are **left out, not guessed**. The screen
+  lists each unmatched Sub Task with its row count so the project can be added or the
+  spelling fixed.
+- The Excel download groups rows by project. Each row's QC Name dropdown offers only its
+  project's QC names, and the Settings sheet has one column per project: name, QC %, then
+  its QC names.
+
+The Content Review tab keeps its own simple reviewer list, because SERP files have no
+Sub Task to match against.
+
 ## Allocation rules
 
 - A row is eligible only if it has a non-blank **Identifier** and **Review Type =
   Production**. Matching ignores case and surrounding whitespace; Identifier `0` counts
   as a value.
-- Eligible rows are pooled across all imported files, then grouped by production user;
-  the percentage applies **within each user**, not to the pool as a whole.
+- Eligible rows are pooled across all imported files, split by project (Sub Task), then
+  grouped by production user; the percentage applies **within each user of each project**.
 - Rows selected for a user = that user's eligible rows × percentage ÷ 100, **rounded
   up**. A user with 150 eligible rows contributes 15 at 10%, and 38 at 25%.
 - Sampling is **stratified by production user**: the percentage applies within each
